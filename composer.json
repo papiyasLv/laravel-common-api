@@ -1,0 +1,34 @@
+{
+    "name": "papiyas/api",
+    "type": "library",
+    "description": "A common api code-return for laravel",
+    "keywords": [
+        "api",
+        "laravel"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^7.3|^8.0",
+        "bensampo/laravel-enum": "^3.3"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Papiyas\\Api\\ApiServiceProvider"
+            ],
+            "aliases": {
+                "Api": "Paiyas\\Facades\\Api"
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+ 	        "Papiyas\\Api\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

@@ -14,7 +14,7 @@ class ApiServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../config/api.php' => config_path('api.php'),
-                __DIR__ . '/../resources/Enums' => app_path('Enums'),
+                __DIR__ . '/../resources/enums' => app_path('Enums'),
                 __DIR__ . '/../resources/lang'  => resource_path('lang'),
             ]);
         }

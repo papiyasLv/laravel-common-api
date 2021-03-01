@@ -25,7 +25,7 @@ class ApiServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/api.php', 'api');
 
         $this->app->singleton('api', function () {
-            return new Api(config('api.keys'));
+            return new Api(config('api.settings'));
         });
     }
 }

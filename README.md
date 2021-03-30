@@ -39,7 +39,7 @@ use App\Enums\ApiCodeEnum;
 Route::get('/failure', function () {
     
     return Api::failure(
-        ApiCodeEnum::failure,
+        ApiCodeEnum::FAILURE,
         /**
          * 第二个参数为自定义返回错误信息，默认情况下会自动去
          * resource/lang/zh_CN/api.php文件读取对应的信息

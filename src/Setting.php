@@ -10,7 +10,7 @@ class Setting
     public string $messageKey;
     public string $dataResultKey;
     public string $messageAlwaysReturn;
-    public \Closure $extra;
+    public \Closure|null $extra = null;
 
 
     public function __construct(array $settings, $callback = null)

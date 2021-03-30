@@ -5,21 +5,11 @@ namespace Papiyas\Api\Response;
 
 use App\Enums\ApiCodeEnum;
 use BenSampo\Enum\Exceptions\InvalidEnumMemberException;
+use Papiyas\Api\Setting;
 
 class Api
 {
-    protected $statusKey;
-    protected $messageKey;
-    protected $dataResultKey;
-    protected $messageAlwaysReturn;
-
-    public function __construct(array $config)
-    {
-        $this->statusKey = $config['status_key'];
-        $this->messageKey = $config['message_key'];
-        $this->dataResultKey = $config['data_result_key'];
-        $this->messageAlwaysReturn = $config['message_always_return'];
-    }
+    public function __construct(private Setting $setting){}
 
     /**
      * @param  int  $apiCodeEnum
@@ -38,20 +28,25 @@ class Api
 
         // 必会返回状态码字段
         $json = [
-            $this->statusKey => $status,
+            $this->setting->statusKey => $status,
         ];
 
         // 当$data为null时，返回格式中不会包含数据结果字段
         if (is_null($data)) {
-            $json[$this->messageKey] = $message;
+            $json[$this->setting->messageKey] = $message;
         } else {
             // 如果开启了始终返回提示信息开关，则无论成功与否都会返回提示信息字段
-            if ($this->messageAlwaysReturn) {
-                $json[$this->messageKey] = $message;
+            if ($this->setting->messageAlwaysReturn) {
+                $json[$this->setting->messageKey] = $message;
             }
 
             // 只有在成功时，即$data字段不为null时返回数据结果字段
-            $json[$this->dataResultKey] = $data;
+            $json[$this->setting->dataResultKey] = $data;
+        }
+
+        // 可通过额外的回调函数进行添加额外参数
+        if ($this->setting->extra instanceof \Closure) {
+            $json = $this->setting->extra->call($this, $json);
         }
 
         return $json;
@@ -80,6 +75,6 @@ class Api
         int $apiCode = ApiCodeEnum::failure,
         string $forceMessage = ''
     ): array {
-        return $this->codeReturn($apiCode, null, $forceMessage);
+        return $this->codeReturn($apiCode, forceMessage: $forceMessage);
     }
 }

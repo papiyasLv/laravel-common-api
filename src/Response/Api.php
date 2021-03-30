@@ -61,7 +61,7 @@ class Api
     public function success(
         array $data = []
     ): array {
-        return $this->codeReturn(ApiCodeEnum::success, $data);
+        return $this->codeReturn(ApiCodeEnum::SUCCESS, $data);
     }
 
     /**
@@ -72,7 +72,7 @@ class Api
      * @throws InvalidEnumMemberException
      */
     public function failure(
-        int $apiCode = ApiCodeEnum::failure,
+        int $apiCode = ApiCodeEnum::FAILURE,
         string $forceMessage = ''
     ): array {
         return $this->codeReturn($apiCode, forceMessage: $forceMessage);
